@@ -33,7 +33,7 @@ var mail = {
 
   handleAuthClick:function(event) {
     gapi.auth.authorize(
-      {client_id: mail.CLIENT_ID, scope: mail.SCOPES, immediate: false},
+      {client_id: mail.CLIENT_ID, scope: mail.SCOPES, immediate: false, authuser:""},
       mail.handleAuthResult);
     return false;
   },
