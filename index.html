@@ -4,11 +4,13 @@
     <title>Simple Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    
-    <script src="https://apis.google.com/js/client.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJwRQDPTAVB51lhb2IrtEiNJNyFDJd37Q" async defer></script>
+    <script src="maps.js"></script>
     <script src="main.js"></script>
     <script src="mail.js"></script>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJwRQDPTAVB51lhb2IrtEiNJNyFDJd37Q&callback=mailMap.main" async defer></script>
+
+
     </script>
     <style>
       html, body {
@@ -17,7 +19,7 @@
         padding: 0;
       }
       #map {
-        height: 30%;
+        height: 70%;
       }
     </style>
   </head>
