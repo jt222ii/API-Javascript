@@ -2,6 +2,7 @@
 var mailMap = {
     main: function(){
         gmaps.initMap();
-        mail.checkAuth();
+        authorize.checkAuth();
+
     }
 };
