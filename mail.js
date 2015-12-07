@@ -4,26 +4,21 @@ var mail = {
   LABELS: [],
 
   MESSAGES: [],//test
-  listMails:function() {
-    alert("får inte ut meddelanden. mail.js rad 8");
-    var labelids = [];
-    mail.LABELS.forEach( function(l) { labelids.push(l.id); } );
-    
-    var request = gapi.client.gmail.users.messages.list({
-      'userId': 'me', 'labelIds': labelids
-    });
-    
-    request.execute(function(resp) {
-      //mail.MESSAGES.push(resp);
-      console.log(resp);
-    });
-    
-  
+  getMails:function() {
+    for (var i = 0; i < mail.LABELS.length; i++) {
+      var request = gapi.client.gmail.users.messages.list({
+        'userId': 'me', 'labelIds': mail.LABELS[i].id
+      });
+      request.execute(function(resp) {
+        mail.MESSAGES.push(resp);
+      });
+    }
   },
   loadGmailApi:function() {
     gapi.client.load('gmail', 'v1', mail.getLabels);
   },
 
+  //gets labels then calls getMails to get the mails from that label
   getLabels:function() {
     var request = gapi.client.gmail.users.labels.list({
       'userId': 'me'
@@ -38,8 +33,9 @@ var mail = {
             }
         }
       }
-      mail.listMails();
-      // return mail.LABELIDS;
+      gmaps.setMarkersOnMap(mail.LABELS);
     });
   },
+  
+
 }
