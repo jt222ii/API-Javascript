@@ -4,8 +4,6 @@ var authorize = {
 
   SCOPES:['https://mail.google.com/'],
   
-  SORTLABEL:"Location/",
-
    checkAuth:function() {
     gapi.auth.authorize(
       {
@@ -35,7 +33,7 @@ var authorize = {
 
   handleAuthLogin:function(event) {
     gapi.auth.authorize(
-      {client_id: authorize.CLIENT_ID, scope: authorize.SCOPES, immediate: false},
+      {client_id: authorize.CLIENT_ID, scope: authorize.SCOPES, immediate: false, authuser:""},
       authorize.handleAuthResult);
     return false;
   }

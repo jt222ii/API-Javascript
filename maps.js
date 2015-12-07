@@ -14,7 +14,7 @@ var gmaps = {
   },
   
   setMarker:function(label, geocoder){
-        var locationname = label.name.replace("Location/", "");
+        var locationname = label.name.replace("location/", "");
         geocoder.geocode({'address': locationname}, 
         function(results, status) 
         {
