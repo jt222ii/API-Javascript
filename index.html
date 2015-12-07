@@ -9,7 +9,7 @@
     <script src="mail.js"></script>
     <script src="authorize.js"></script>
     <script src="https://apis.google.com/js/client.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJwRQDPTAVB51lhb2IrtEiNJNyFDJd37Q" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJwRQDPTAVB51lhb2IrtEiNJNyFDJd37Q&callback=gmaps.initMap" async defer></script>
     </script>
     <style>
       html, body {
@@ -25,10 +25,8 @@
   <body>
     <div id="map"></div>  
     <div id="authorize-div">
-      <span>Authorize access to Gmail API</span>
-      Button for the user to click to initiate auth sequence 
       <button id="authorize-button" onclick="authorize.handleAuthLogin(event)">
-        Authorize
+        Login with gmail
       </button>
     </div>
     <pre id="output"></pre>

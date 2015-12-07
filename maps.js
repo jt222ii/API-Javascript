@@ -20,7 +20,6 @@ var gmaps = {
         {
             if (status === google.maps.GeocoderStatus.OK)
             {
-                console.log(results);
                 var loc = results[0].geometry.location;
                 var marker = new google.maps.Marker({
                 position: loc,
@@ -32,7 +31,6 @@ var gmaps = {
             {
               setTimeout(function(){
                   gmaps.setMarker(label, geocoder);
-                  console.log("recall");
               }, 300)
             }
         });

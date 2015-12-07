@@ -9,9 +9,9 @@ var authorize = {
    checkAuth:function() {
     gapi.auth.authorize(
       {
-        'client_id': authorize.CLIENT_ID,
-        'scope': authorize.SCOPES.join(' '),
-        'immediate': true
+        client_id: authorize.CLIENT_ID,
+        scope: authorize.SCOPES.join(' '),
+        immediate: true
       }, authorize.handleAuthResult);
   },
 
@@ -26,7 +26,6 @@ var authorize = {
       // Hide auth UI, then load client library.
       authorizeDiv.style.display = 'none';
       mail.loadGmailApi();
-      mailMap.main();
     } else {
       // Show auth UI, allowing the user to initiate authorization by
       // clicking authorize button.
@@ -36,7 +35,7 @@ var authorize = {
 
   handleAuthLogin:function(event) {
     gapi.auth.authorize(
-      {client_id: authorize.CLIENT_ID, scope: authorize.SCOPES, immediate: false, authuser:""},
+      {client_id: authorize.CLIENT_ID, scope: authorize.SCOPES, immediate: false},
       authorize.handleAuthResult);
     return false;
   }
