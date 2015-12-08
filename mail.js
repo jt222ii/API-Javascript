@@ -8,20 +8,21 @@ var mail = {
   getMails:function() {
     for (var i = 0; i < mail.LABELS.length; i++) {
       var request = gapi.client.gmail.users.messages.list({
-        'userId': 'me', 'labelIds': mail.LABELS[i].id
+        'userId': 'me', 'labelIds': mail.LABELS[i].id,
       });
+      
       request.execute(function(resp) {
         mail.MESSAGEIDS.push(resp);
         if(mail.MESSAGEIDS.length>=mail.LABELS.length){
-          mail.mailTest();
+          mail.getMail();
         }
       });
     }
   },
+
   
-  mailTest:function(){
+  getMail:function(){
     for (var i = 0; i < mail.MESSAGEIDS.length; i++) {
-      //console.log(mail.MESSAGEIDS[i]);
       var messageID = mail.MESSAGEIDS[i].messages[0].id;
       //console.log(messageID);
       var request = gapi.client.gmail.users.messages.get({
@@ -29,12 +30,13 @@ var mail = {
         'id': messageID
       });
       request.execute(function(resp){
-        console.log(resp);
+        //console.log(resp);
         var labelID;
-        for (var i = 0; i < resp.labelIds.length; i++) {
-          if(resp.labelIds[i].indexOf("Label_") > -1)
+        var labelname;
+        for (var y = 0; y < resp.labelIds.length; y++) {
+          if(resp.labelIds[y].indexOf("Label_") > -1)
           {
-            labelID = resp.labelIds[i];
+            labelID = resp.labelIds[y];
           }
         }
         var item = {
@@ -43,9 +45,37 @@ var mail = {
           labelID:labelID,
         };
         mail.MESSAGES.push(item);
-        console.log(mail.MESSAGES);
+        if(mail.MESSAGES.length == mail.MESSAGEIDS.length)
+        {
+          console.log(mail.LABELS);
+          gmaps.setMarkersOnMap(mail.LABELS, mail.MESSAGES);
+        }
       });
       }
+  },
+  getMailFromLabel:function(label){
+      var request = gapi.client.gmail.users.messages.list({
+        'userId': 'me', 'labelIds': label.id,
+      });
+      
+      request.execute(function(resp) {
+      mail.MESSAGEIDS.push(resp);
+        for (var i = 0; i < resp.messages.length; i++) {
+          var messageID = resp.messages[i].id;
+          var request = gapi.client.gmail.users.messages.get({
+            'userId': 'me',
+            'id': messageID
+            });
+          request.execute(function(response){
+            var labelname;
+            var item = {
+              subject:response.payload.headers[16].value,
+              snippet:response.snippet,
+            };
+            gmaps.setMarker(label, item);
+        });
+      }
+    })
   },
   
   loadGmailApi:function() {
@@ -64,11 +94,13 @@ var mail = {
             if(resp.labels[i].name.indexOf("location/") > -1)//sort out any label that isnt nested in the "Location"-label
             {
               mail.LABELS.push(resp.labels[i]);
+              mail.getMailFromLabel(resp.labels[i]);
             }
         }
       }
-      mail.getMails();
-      gmaps.setMarkersOnMap(mail.LABELS);
+      //mail.getMails();
+      //console.log(mail.MESSAGES);
+      //gmaps.setMarkersOnMap(mail.LABELS);
     });
   },
   
