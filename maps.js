@@ -10,15 +10,8 @@ var gmaps = {
       zoom: 2
     });
   },
-  setMarkersOnMap:function(labels, messages){
-    
-    for (var i = 0; i < labels.length; i++) {
-        gmaps.setMarker(labels[i], messages[i]);
-      }
-  },
   
   setMarker:function(label, message){
-        console.log(message);
         var locationname = label.name.replace("location/", "");
         gmaps.geocoder.geocode({'address': locationname}, 
         function(results, status) 
@@ -32,8 +25,18 @@ var gmaps = {
                 title: 'Hello World!'
               });
               marker.addListener('click', function(){
-                //"<h1>Location:"+locationname+"</h1><h2>Subject:"+message.subject+"</h2><h2>Snippet:</h2>"+message.snippet
-                gmaps.infowindow.setContent("<h1>Location:"+locationname+"</h1><h2>Subject:"+message.subject+"</h2><h2>Snippet:</h2>"+message.snippet); 
+                gmaps.infowindow.setContent
+                (
+                  "<div id=\"infobox\"><h1>Location:"+
+                  locationname+
+                  "</h1><h2>Subject:"+
+                  message.subject+
+                  "</h2><h2>Snippet:</h2>"+
+                  message.snippet+
+                  "<h2>Message:</h2>"+ 
+                  message.messageText+
+                  "</div>"
+                ); 
                 gmaps.infowindow.open(map, marker);
               });
             }
