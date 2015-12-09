@@ -1,3 +1,4 @@
+//Much of this is written with the help of googles documentation. https://developers.google.com/gmail/api/quickstart/js
 var authorize = {
     
   CLIENT_ID:'595555494787-6fgu71dnnbf01o0t3rk9kjgothlkaj1r.apps.googleusercontent.com',
@@ -21,12 +22,9 @@ var authorize = {
   handleAuthResult:function(authResult) {
     var authorizeDiv = document.getElementById('authorize-div');
     if (authResult && !authResult.error) {
-      // Hide auth UI, then load client library.
       authorizeDiv.style.display = 'none';
       mail.loadGmailApi();
     } else {
-      // Show auth UI, allowing the user to initiate authorization by
-      // clicking authorize button.
       authorizeDiv.style.display = 'inline';
     }
   },

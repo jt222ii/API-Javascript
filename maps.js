@@ -11,20 +11,20 @@ var gmaps = {
     });
   },
   
-  setMarker:function(label, message){
+  setMarker:function(label, message){ //sets a marker on the map based on the label. Information based on the message
         var locationname = label.name.replace("location/", "");
-        gmaps.geocoder.geocode({'address': locationname}, 
+        gmaps.geocoder.geocode({'address': locationname}, //geocode the name
         function(results, status) 
         {
             if (status === google.maps.GeocoderStatus.OK)
             {
-                var loc = results[0].geometry.location;
-                var marker = new google.maps.Marker({
+                var loc = results[0].geometry.location; //get coords from the result
+                var marker = new google.maps.Marker({ //create new marker and place it on the map
                 position: loc,
                 map: map,
                 title: 'Hello World!'
               });
-              marker.addListener('click', function(){
+              marker.addListener('click', function(){//infowindow to show information about the marker/mail/location
                 gmaps.infowindow.setContent
                 (
                   "<div id=\"infobox\"><h1>Location:"+
@@ -42,7 +42,7 @@ var gmaps = {
             }
             else
             {
-              setTimeout(function(){
+              setTimeout(function(){ //To bypass the whole "only 10-requests a second"-rule I make it so that if they fail to get added to the map it will try again.
                   gmaps.setMarker(label, message);
               }, 300)
             }
