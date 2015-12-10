@@ -12,7 +12,7 @@ var mail = {
             'id': message.id
             });
           request.execute(function(response){
-            //console.log(response);
+            //The response you get contains a lot of information about and from the mail.
             var message = response.payload.parts[1].body.data; //most mails have the message here...
             if(message === undefined)
             {
